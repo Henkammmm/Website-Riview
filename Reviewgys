@@ -1,1 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>D'luxury Hotel</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#f5f5f5;
+color:#111;
+}
+
+.hero{
+height:100vh;
+background:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80') center/cover;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.45);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+color:white;
+max-width:800px;
+}
+
+.hero-content span{
+color:#d8a928;
+font-size:18px;
+letter-spacing:2px;
+font-weight:500;
+}
+
+.hero-content h1{
+font-family:'Playfair Display',serif;
+font-size:64px;
+margin:15px 0;
+}
+
+.hero-content p{
+font-size:22px;
+line-height:1.6;
+opacity:0.95;
+}
+
+.section{
+padding:80px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+.title{
+text-align:center;
+margin-bottom:50px;
+}
+
+.title h2{
+font-family:'Playfair Display',serif;
+font-size:48px;
+margin-bottom:10px;
+}
+
+.title p{
+color:#777;
+font-size:18px;
+}
+
+.review-box{
+background:white;
+padding:40px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+max-width:700px;
+margin:auto;
+}
+
+label{
+display:block;
+font-weight:600;
+margin:20px 0 8px;
+font-size:18px;
+}
+
+input, textarea{
+width:100%;
+padding:16px;
+border:1px solid #ddd;
+border-radius:14px;
+font-size:16px;
+outline:none;
+}
+
+textarea{
+height:160px;
+resize:none;
+}
+
+.stars{
+display:flex;
+gap:10px;
+font-size:34px;
+cursor:pointer;
+color:#ccc;
+margin-top:10px;
+}
+
+.star.active{
+color:#d8a928;
+}
+
+button{
+margin-top:25px;
+width:100%;
+padding:18px;
+border:none;
+border-radius:14px;
+background:#d8a928;
+color:#111;
+font-size:22px;
+font-weight:700;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 18px rgba(216,169,40,0.4);
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:22px;
+box-shadow:0 10px 25px rgba(0,0,0,0.07);
+}
+
+.card h3{
+font-family:'Playfair Display',serif;
+font-size:30px;
+margin-bottom:15px;
+}
+
+.card .gold{
+color:#d8a928;
+font-size:22px;
+margin-bottom:15px;
+}
+
+.card p{
+color:#666;
+font-style:italic;
+line-height:1.6;
+}
+
+footer{
+text-align:center;
+padding:30px;
+background:white;
+color:#777;
+margin-top:60px;
+}
+
+@media(max-width:768px){
+
+.hero-content h1{
+font-size:42px;
+}
+
+.hero-content p{
+font-size:18px;
+}
+
+.title h2{
+font-size:38px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+<div class="hero-content">
+<span>WELCOME TO</span>
+<h1>D'luxury Hotel</h1>
+<p>Give your review to us, we hope the best for you</p>
+</div>
+</section>
+
+<section class="section">
+
+<div class="title">
+<h2>Share Your Experience</h2>
+<p>Your feedback helps us serve you better</p>
+</div>
+
+<div class="review-box">
+
+<label>Your Name</label>
+<input type="text" id="name" placeholder="Enter your name">
+
+<label>Rating</label>
+<div class="stars" id="stars">
+<span class="star">★</span>
+<span class="star">★</span>
+<span class="star">★</span>
+<span class="star">★</span>
+<span class="star">★</span>
+</div>
+
+<label>Your Review</label>
+<textarea id="review" placeholder="Tell us about your experience..."></textarea>
+
+<button onclick="addReview()">Submit Review</button>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="title">
+<h2>Guest Reviews</h2>
+<p>What our guests are saying</p>
+</div>
+
+<div class="cards" id="reviewList">
+
+<div class="card">
+<h3>Nanoy</h3>
+<div class="gold">★★★★★</div>
+<p>"Very woaowww"</p>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 D'luxury Hotel. All rights reserved.
+</footer>
+
+<script>
+let rating = 0;
+const stars = document.querySelectorAll(".star");
+
+stars.forEach((star,index)=>{
+star.addEventListener("click",()=>{
+rating = index + 1;
+
+stars.forEach((s,i)=>{
+s.classList.toggle("active", i < rating);
+});
+});
+});
+
+function addReview(){
+const name = document.getElementById("name").value;
+const review = document.getElementById("review").value;
+
+if(name==="" || review==="" || rating===0){
+alert("Isi semua dulu. Sistem masih punya harga diri.");
+return;
+}
+
+const card = document.createElement("div");
+card.classList.add("card");
+
+card.innerHTML = `
+<h3>${name}</h3>
+<div class="gold">${"★".repeat(rating)}</div>
+<p>"${review}"</p>
+`;
+
+document.getElementById("reviewList").prepend(card);
+
+document.getElementById("name").value="";
+document.getElementById("review").value="";
+rating=0;
+
+stars.forEach(s=>s.classList.remove("active"));
+}
+</script>
+
+</body>
+</html>
